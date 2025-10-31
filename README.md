@@ -1,66 +1,59 @@
-# 🧩 Ansible Automation Lab – GitHub Actions CI/CD Deployment
+# 🚀 Ansible Automation Lab – CI/CD Deployment with GitHub Actions
 
-This project demonstrates an **automated deployment workflow** using **Ansible** and **GitHub Actions**.  
-The setup installs essential tools on an Azure VM, deploys a sample website using Nginx, and verifies configuration — all triggered automatically on push to the `main` branch.
-
----
-
-## 🚀 Project Overview
-
-**Tools & Technologies Used**
-- **Ansible** – Configuration management & automation
-- **GitHub Actions** – CI/CD automation
-- **Azure VM (Ubuntu)** – Deployment target
-- **Nginx** – Web server for hosting
-- **Git** & **Curl** – Supporting utilities
+This project demonstrates how to automate the provisioning and configuration of a web server using **Terraform**, **Ansible**, and **GitHub Actions**.
 
 ---
 
-## ⚙️ Ansible Playbook
+## 🧩 Project Overview
 
-**File:** `setup-dev-tools.yml`  
-This playbook installs Git, Curl, and Nginx, then clones a sample website from GitHub.
+This lab automates:
+- Creating an **Azure Linux VM** using **Terraform**
+- Installing developer tools (**Git**, **Curl**, and **Nginx**) via **Ansible**
+- Deploying a simple website automatically from **GitHub Actions (CI/CD)**
 
-```yaml
-- name: Install Git, Curl, and Nginx, then deploy website
-  hosts: localhost
-  become: yes
+---
 
-  tasks:
-    - name: Install Git
-      apt:
-        name: git
-        state: present
-        update_cache: yes
+## 🏗️ Architecture
 
-    - name: Install Curl
-      apt:
-        name: curl
-        state: present
+**GitHub Actions → SSH → Azure VM → Install + Deploy Website**
 
-    - name: Install Nginx
-      apt:
-        name: nginx
-        state: present
+1. **Terraform**: Creates the Azure infrastructure  
+2. **Ansible**: Installs Git, Curl, and Nginx on the Linux VM  
+3. **GitHub Actions**: Triggers automatically on every code push to deploy updates  
 
-    - name: Clone sample website repository
-      git:
-        repo: "https://github.com/vijaya3121/sample-website.git"
-        dest: /tmp/sample-website
-        version: main
-        force: yes
+---
 
-    - name: Copy website files to Nginx web root
-      copy:
-        src: /tmp/sample-website/
-        dest: /var/www/html/
-        owner: www-data
-        group: www-data
-        mode: '0644'
-      notify: Restart Nginx
+## ⚙️ Steps Followed
 
-  handlers:
-    - name: Restart Nginx
-      service:
-        name: nginx
-        state: restarted
+### 🪴 Step 1: Provision VM with Terraform
+Created a Linux VM on Azure and verified public IP connectivity.
+
+### 🔧 Step 2: Install Ansible
+Installed Ansible on the controller VM using:
+```bash
+sudo apt update && sudo apt install ansibl
+ Step 3: Create Ansible Playbook
+
+Created setup-dev-tools.yml to:
+
+Install Git, Curl, and Nginx
+
+Clone the sample website repository
+
+Deploy files to /var/www/html
+
+⚙️ Step 4: Configure GitHub Actions Workflow
+
+Added a workflow file .github/workflows/deploy.yml to automatically:
+
+SSH into the Azure VM
+
+Execute the Ansible playbook
+
+Redeploy the website when new commits are pushed
+
+ Step 5: Verify Deployment
+
+Opened the VM’s public IP in a browser and confirmed the sample website was deployed successfully
+
+ye -y
