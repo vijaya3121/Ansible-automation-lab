@@ -101,7 +101,35 @@ Visited the VM’s public IP in a browser.
 
 The sample website’s homepage appeared successfully
 
-Ansible Playbook Execution  
+###Ansible Playbook Execution:
+https://github.com/vijaya3121/Ansible-automation-lab/blob/main/ansible-run.png.png
+###Github Action workflow:
+https://github.com/vijaya3121/Ansible-automation-lab/blob/main/github-action-workflow.png.png
+###Nginx homepage:
+https://github.com/vijaya3121/Ansible-automation-lab/blob/main/nginx-homepage.png.png
+
+###🌱 Future Enhancements
+
+Add automatic SSL configuration using Certbot
+
+Deploy Docker containers through Ansible roles
+
+Integrate Terraform and Ansible in a single CI/CD workflow
+
+Add monitoring with Prometheus + Grafana
+
+###🧾 Results
+
+✅ Successfully provisioned infrastructure with Terraform
+✅ Configured and deployed Nginx using Ansible
+✅ Automated deployment pipeline via GitHub Actions
+✅ Website auto-updated on every commit to main branch
+
+
+👩‍💻 Author
+
+Vijaya Reddy
+💼 DevOps & Cloud Engineer
 
 
 
