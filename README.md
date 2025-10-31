@@ -8,8 +8,8 @@ This project demonstrates how to automate the provisioning and configuration of 
 
 This lab automates:
 - Creating an **Azure Linux VM** using **Terraform**
-- Installing developer tools (**Git**, **Curl**, and **Nginx**) via **Ansible**
-- Deploying a simple website automatically from **GitHub Actions (CI/CD)**
+- Installing developer tools (**Git**, **Curl**, **Nginx**) via **Ansible**
+- Deploying a simple website automatically using **GitHub Actions (CI/CD)**
 
 ---
 
@@ -17,43 +17,105 @@ This lab automates:
 
 **GitHub Actions → SSH → Azure VM → Install + Deploy Website**
 
-1. **Terraform**: Creates the Azure infrastructure  
-2. **Ansible**: Installs Git, Curl, and Nginx on the Linux VM  
-3. **GitHub Actions**: Triggers automatically on every code push to deploy updates  
+1. **Terraform** – Creates the Azure infrastructure  
+2. **Ansible** – Installs Git, Curl, and Nginx on the Linux VM  
+3. **GitHub Actions** – Triggers automatically on every code push to deploy updates  
 
 ---
 
 ## ⚙️ Steps Followed
 
-### 🪴 Step 1: Provision VM with Terraform
+### 🪜 Step 1: Provision VM with Terraform
 Created a Linux VM on Azure and verified public IP connectivity.
 
-### 🔧 Step 2: Install Ansible
+---
+
+### 🧰 Step 2: Install Ansible
 Installed Ansible on the controller VM using:
 ```bash
-sudo apt update && sudo apt install ansibl
- Step 3: Create Ansible Playbook
+sudo apt update && sudo apt install ansible -y
+ 
 
-Created setup-dev-tools.yml to:
+###📜 Step 3: Create Ansible Playbook
+
+Created a playbook named setup-dev-tools.yml
 
 Install Git, Curl, and Nginx
 
 Clone the sample website repository
 
-Deploy files to /var/www/html
+Copy index.html to /var/www/html
+Example snippet:
+---
+- name: Setup Developer Tools
+  hosts: web
+  become: yes
+  tasks:
+    - name: Install Git, Curl, and Nginx
+      apt:
+        name:
+          - git
+          - curl
+          - nginx
+        state: present
+        update_cache: yes
 
-⚙️ Step 4: Configure GitHub Actions Workflow
+    - name: Copy sample index.html to Nginx directory
+     copy:
+        src: /home/azureuser/sample-website/index.html
+        dest: /var/www/html/index.html
 
-Added a workflow file .github/workflows/deploy.yml to automatically:
+###⚙️ Step 4: Configure GitHub Actions Workflow
 
-SSH into the Azure VM
+Added a workflow file .github/workflows/deploy.yml to trigger Ansible automatically on every push to the main branch.
+Example workflow:
+name: Deploy with Ansible
 
-Execute the Ansible playbook
+on:
+  push:
+    branches:
+      - main
 
-Redeploy the website when new commits are pushed
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
 
- Step 5: Verify Deployment
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-Opened the VM’s public IP in a browser and confirmed the sample website was deployed successfully
+      - name: Run Ansible Playbook on Azure VM
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.AZURE_VM_IP }}
+          username: azureuser
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/ansible-labs
+            ansible-playbook setup-dev-tools.yml
+###🌐 Step 5: Verify Deployment
 
-ye -y
+After GitHub Actions completed successfully:
+
+Visited the VM’s public IP in a browser.
+
+The sample website’s homepage appeared successfully
+
+Ansible Playbook Execution  
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
