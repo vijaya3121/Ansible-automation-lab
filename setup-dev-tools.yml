@@ -1,18 +1,14 @@
 ---
-- name: Install Git, Curl, and Nginx
+- name: Install Git, Curl, and Nginx, then deploy website
   hosts: localhost
-  connection: local
   become: yes
 
   tasks:
-    - name: Update apt package cache
-      apt:
-        update_cache: yes
-
     - name: Install Git
       apt:
         name: git
         state: present
+        update_cache: yes
 
     - name: Install Curl
       apt:
@@ -24,8 +20,24 @@
         name: nginx
         state: present
 
-    - name: Start and enable Nginx service
+    - name: Clone sample website repository
+      git:
+        repo: "https://github.com/vijaya3121/sample-website.git"
+        dest: /tmp/sample-website
+        version: main
+        force: yes
+
+    - name: Copy website files to Nginx web root
+      copy:
+        src: /tmp/sample-website/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0644'
+      notify: Restart Nginx
+
+  handlers:
+    - name: Restart Nginx
       service:
         name: nginx
-        state: started
-        enabled: yes
+        state: restarted
