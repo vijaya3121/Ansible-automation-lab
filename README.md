@@ -39,7 +39,7 @@ Installed Ansible on the controller VM using:
 ---
 
 
-### 📑 Step3: Create Ansible playbook
+### 📑 Step 3: Create Ansible playbook
 Created a playbook named setup-dev-tools.yml
 
 Install Git, Curl, and Nginx
