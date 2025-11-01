@@ -39,7 +39,7 @@ Installed Ansible on the controller VM using:
 ---
 
 
-### Step 3: Create Ansible Playbook
+### 📑 Step3: Create Ansible playbook
 Created a playbook named setup-dev-tools.yml
 
 Install Git, Curl, and Nginx
@@ -118,11 +118,11 @@ The sample website’s homepage appeared successfully
 ---
 
 ### Ansible Playbook Execution:
-https://github.com/vijaya3121/Ansible-automation-lab/blob/main/ansible-run.png.png
+![Ansible run](https://github.com/vijaya3121/Ansible-automation-lab/blob/main/ansible-run.png.png)
 ### Github Action workflow:
-https://github.com/vijaya3121/Ansible-automation-lab/blob/main/github-action-workflow.png.png
+![Github workflow](https://github.com/vijaya3121/Ansible-automation-lab/blob/main/github-action-workflow.png.png)
 ### Nginx homepage:
-https://github.com/vijaya3121/Ansible-automation-lab/blob/main/nginx-homepage.png.png
+![Nginx output](https://github.com/vijaya3121/Ansible-automation-lab/blob/main/nginx-homepage.png.png)
 
 ---
 
