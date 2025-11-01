@@ -33,11 +33,13 @@ Created a Linux VM on Azure and verified public IP connectivity.
 ### 🧰 Step 2: Install Ansible
 Installed Ansible on the controller VM using:
 ```bash
-sudo apt update && sudo apt install ansible -y
- 
+        sudo apt update && sudo apt install ansible -y
+```
 
-###📜 Step 3: Create Ansible Playbook
+---
 
+
+### Step 3: Create Ansible Playbook
 Created a playbook named setup-dev-tools.yml
 
 Install Git, Curl, and Nginx
@@ -45,8 +47,10 @@ Install Git, Curl, and Nginx
 Clone the sample website repository
 
 Copy index.html to /var/www/html
+
 Example snippet:
----
+
+```
 - name: Setup Developer Tools
   hosts: web
   become: yes
@@ -65,10 +69,16 @@ Example snippet:
         src: /home/azureuser/sample-website/index.html
         dest: /var/www/html/index.html
 
-###⚙️ Step 4: Configure GitHub Actions Workflow
+```
+---
+
+### ⚙️ Step 4: Configure GitHub Actions Workflow
 
 Added a workflow file .github/workflows/deploy.yml to trigger Ansible automatically on every push to the main branch.
+
 Example workflow:
+
+```
 name: Deploy with Ansible
 
 on:
@@ -93,7 +103,11 @@ jobs:
           script: |
             cd ~/ansible-labs
             ansible-playbook setup-dev-tools.yml
-###🌐 Step 5: Verify Deployment
+```
+
+---
+
+### 🌐 Step 5: Verify Deployment
 
 After GitHub Actions completed successfully:
 
@@ -101,14 +115,18 @@ Visited the VM’s public IP in a browser.
 
 The sample website’s homepage appeared successfully
 
-###Ansible Playbook Execution:
+---
+
+### Ansible Playbook Execution:
 https://github.com/vijaya3121/Ansible-automation-lab/blob/main/ansible-run.png.png
-###Github Action workflow:
+### Github Action workflow:
 https://github.com/vijaya3121/Ansible-automation-lab/blob/main/github-action-workflow.png.png
-###Nginx homepage:
+### Nginx homepage:
 https://github.com/vijaya3121/Ansible-automation-lab/blob/main/nginx-homepage.png.png
 
-###🌱 Future Enhancements
+---
+
+### 🌱 Future Enhancements
 
 Add automatic SSL configuration using Certbot
 
@@ -118,15 +136,18 @@ Integrate Terraform and Ansible in a single CI/CD workflow
 
 Add monitoring with Prometheus + Grafana
 
-###🧾 Results
+---
+
+### 🧾 Results
 
 ✅ Successfully provisioned infrastructure with Terraform
 ✅ Configured and deployed Nginx using Ansible
 ✅ Automated deployment pipeline via GitHub Actions
 ✅ Website auto-updated on every commit to main branch
 
+---
 
-👩‍💻 Author
+### 👩‍💻 Author
 
 Vijaya Reddy
 💼 DevOps & Cloud Engineer
@@ -137,7 +158,10 @@ Vijaya Reddy
 
 
 
-    
+
+
+
+
 
 
 
