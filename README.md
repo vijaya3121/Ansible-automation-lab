@@ -33,7 +33,7 @@ Created a Linux VM on Azure and verified public IP connectivity.
 ### 🧰 Step 2: Install Ansible
 Installed Ansible on the controller VM using:
 ```bash
-        sudo apt update && sudo apt install ansible -y
+sudo apt update && sudo apt install ansible -y
 ```
 
 ---
